@@ -25,3 +25,5 @@ for file in txt_files:
     result.append(hashlib.md5(content).hexdigest())
     file_data.close()
 print(result)
+
+# Задание №3 - Найти файл, хэш которого равен: "4636f9ae9fef12ebd56cd39586d33cfb"
