@@ -27,3 +27,18 @@ for file in txt_files:
 print(result)
 
 # Задание №3 - Найти файл, хэш которого равен: "4636f9ae9fef12ebd56cd39586d33cfb"
+target_hash = '4636f9ae9fef12ebd56cd39586d33cfb'
+file_path = []
+file_content = []
+for r, d, f in os.walk('D:\\Files'):
+    for i in f:
+        file_data = open(r + '\\' + i, 'rb')
+        content = file_data.read()
+        if hashlib.md5(content).hexdigest() == target_hash:
+            file_path.append(r + '\\' + i)
+            file_content.append(content)
+        file_data.close()
+print(file_path)
+print(file_content)
+
+# Задание #4 - Получить содержимое веб-страницы
