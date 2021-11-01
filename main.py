@@ -64,7 +64,7 @@ for line in lines:
         tmp = re.sub('<.*?>', ';', line)
         tmp = re.sub(r'(\(\+\d+\s?\d*\))', ';', tmp)
         tmp = re.sub('(;)+', ';', tmp)
-        tmp = re.sub('(_)', '0', tmp)
+        tmp = re.sub('(_)', '-1', tmp)
         tmp = re.sub(r'(\*)', '', tmp)
         tmp = tmp[3:].strip()
         tmp = re.sub(r';$', '', tmp)
