@@ -1,3 +1,4 @@
+"""
 import json
 import re
 from tqdm import tqdm
@@ -306,3 +307,4 @@ print(f"Count of invalid records: {count_invalid}")
 print("Count of invalid entries by type of error:")
 for key, value in dict_invalid_records.items():
     print(" " * 4 + str(key) + ": " + str(value))
+"""
