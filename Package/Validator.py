@@ -1,7 +1,7 @@
 import json
 import re
-import argparse
 from tqdm import tqdm
+
 
 class File:
     """
@@ -219,3 +219,69 @@ class Validator:
         if not self.check_address():
             invalid_values.append("address")
         return invalid_values
+
+
+def file_validate(file_input: str, file_output: str, file_output_: str):
+    data = File(file_input).data
+    count_valid = 0
+    count_invalid = 0
+    dict_invalid_records = {"telephone": 0,
+                            "weight": 0,
+                            "snils": 0,
+                            "passport_series": 0,
+                            "university": 0,
+                            "work_experience": 0,
+                            "political_views": 0,
+                            "worldview": 0,
+                            "address": 0}
+    list_result = []
+    list_fail_result = []
+
+    with tqdm(data, desc="Прогресс обработки записей") as progressbar:
+        for elem in data:
+            check = Validator(elem).check_data()
+            if len(check) == 0:
+                count_valid += 1
+                list_result.append(
+                    {
+                        "telephone": elem["telephone"],
+                        "weight": elem["weight"],
+                        "snils": elem["snils"],
+                        "passport_series": elem["passport_series"],
+                        "university": elem["university"],
+                        "work_experience": elem["work_experience"],
+                        "political_views": elem["political_views"],
+                        "worldview": elem["worldview"],
+                        "address": elem["address"]
+                    }
+                )
+            else:
+                count_invalid += 1
+                list_fail_result.append(
+                    {
+                        "telephone": elem["telephone"],
+                        "weight": elem["weight"],
+                        "snils": elem["snils"],
+                        "passport_series": elem["passport_series"],
+                        "university": elem["university"],
+                        "work_experience": elem["work_experience"],
+                        "political_views": elem["political_views"],
+                        "worldview": elem["worldview"],
+                        "address": elem["address"]
+                    }
+                )
+                for item in check:
+                    dict_invalid_records[item] += 1
+            progressbar.update(1)
+
+    with open(file_output, 'w', encoding='utf-8') as output:
+        json.dump(list_result, output, indent=4, ensure_ascii=False)
+
+    with open(file_output_, 'w', encoding='utf-8') as output_:
+        json.dump(list_fail_result, output_, indent=4, ensure_ascii=False)
+
+    print(f"Count of valid records: {count_valid}")
+    print(f"Count of invalid records: {count_invalid}")
+    print("Count of invalid entries by type of error:")
+    for key, value in dict_invalid_records.items():
+        print(" " * 4 + str(key) + ": " + str(value))
