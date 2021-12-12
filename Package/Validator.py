@@ -4,16 +4,8 @@ from tqdm import tqdm
 
 
 class File:
-    """
-    Класс для чтения записей из файла
-
-    Attributes:
-        _data : list
-        Содержит данные в виде списка, считанные из текстового файла
-    """
-
     def __init__(self, path: str) -> None:
-        self._data = json.load(open(path, encoding='windows-1251'))
+        self._data = json.load(open(path, encoding='utf-8'))
 
     @property
     def data(self) -> list:
@@ -21,22 +13,6 @@ class File:
 
 
 class Validator:
-    """
-    Класс Validator проверяет данные на корректность
-    Attributes:
-        _telephone: str - хранит номер телефона пользователя
-        _weight: float - хранит вес пользователя
-        _snils: str - хранит снилс пользователя
-        _passport_series: str - хранит серию паспорта пользователя
-        _university: str - хранит вуз пользователя
-        _work_experience: float - хранит рабочий стаж пользователя
-        _political_views: str - хранит политические взгляды пользователя
-        _worldview: str - хранит взгляд на мир пользователя
-        _address: str - хранит адрес проживания пользователя
-        _invalid_university: list - хранит список с несуществующими университетами
-        _valid_political_views: list - хранит список с существующими полит. взглядами
-        _valid_worldview: list - хранит список существующих мировоззрений
-    """
     _telephone: str
     _weight: float
     _snils: str
@@ -46,37 +22,37 @@ class Validator:
     _political_views: str
     _worldview: str
     _address: str
-    _invalid_university: list = ['Каражан',
-                                 'Бан Ард',
-                                 'Аретуза',
-                                 'Гвейсон Хайль',
-                                 'Хогвартс',
-                                 'Кирин-Тор',
-                                 'Шармбатон',
-                                 'Дурмстранг']
-    _valid_political_views: list = ['Индифферентные',
-                                    'Социалистические',
-                                    'Консервативные',
-                                    'Коммунистические',
-                                    'Либеральные',
-                                    'Умеренные',
-                                    'Анархистские',
-                                    'Либертарианские']
-    _valid_worldview: list = ['Пантеизм',
-                              'Секулярный гуманизм',
-                              'Деизм',
-                              'Атеизм',
-                              'Иудаизм',
-                              'Католицизм',
-                              'Конфуцианство',
-                              'Агностицизм',
-                              'Буддизм']
+    _invalid_university: list = ['РљР°СЂР°Р¶Р°РЅ',
+                                 'Р‘Р°РЅ РђСЂРґ',
+                                 'РђСЂРµС‚СѓР·Р°',
+                                 'Р“РІРµР№СЃРѕРЅ РҐР°Р№Р»СЊ',
+                                 'РҐРѕРіРІР°СЂС‚СЃ',
+                                 'РљРёСЂРёРЅ-РўРѕСЂ',
+                                 'РЁР°СЂРјР±Р°С‚РѕРЅ',
+                                 'Р”СѓСЂРјСЃС‚СЂР°РЅРі']
+    _valid_political_views: list = ['РРЅРґРёС„С„РµСЂРµРЅС‚РЅС‹Рµ',
+                                    'РЎРѕС†РёР°Р»РёСЃС‚РёС‡РµСЃРєРёРµ',
+                                    'РљРѕРЅСЃРµСЂРІР°С‚РёРІРЅС‹Рµ',
+                                    'РљРѕРјРјСѓРЅРёСЃС‚РёС‡РµСЃРєРёРµ',
+                                    'Р›РёР±РµСЂР°Р»СЊРЅС‹Рµ',
+                                    'РЈРјРµСЂРµРЅРЅС‹Рµ',
+                                    'РђРЅР°СЂС…РёСЃС‚СЃРєРёРµ',
+                                    'Р›РёР±РµСЂС‚Р°СЂРёР°РЅСЃРєРёРµ']
+    _valid_worldview: list = ['РџР°РЅС‚РµРёР·Рј',
+                              'РЎРµРєСѓР»СЏСЂРЅС‹Р№ РіСѓРјР°РЅРёР·Рј',
+                              'Р”РµРёР·Рј',
+                              'РђС‚РµРёР·Рј',
+                              'РСѓРґР°РёР·Рј',
+                              'РљР°С‚РѕР»РёС†РёР·Рј',
+                              'РљРѕРЅС„СѓС†РёР°РЅСЃС‚РІРѕ',
+                              'РђРіРЅРѕСЃС‚РёС†РёР·Рј',
+                              'Р‘СѓРґРґРёР·Рј']
 
     def __init__(self, data: dict):
         """
-        Инициализируется объект класса Validator
+        РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚СЃСЏ РѕР±СЉРµРєС‚ РєР»Р°СЃСЃР° Validator
         :param data: dict
-            Передается словарь со всеми полями данных
+            РџРµСЂРµРґР°РµС‚СЃСЏ СЃР»РѕРІР°СЂСЊ СЃРѕ РІСЃРµРјРё РїРѕР»СЏРјРё РґР°РЅРЅС‹С…
         """
         self._telephone = data['telephone']
         self._weight = data['weight']
@@ -90,10 +66,10 @@ class Validator:
 
     def check_telephone(self) -> bool:
         """
-        Метод проверяет номер телефона пользователя
-        Если отсутствуют скобки, знак + перед 7, цифр в номере или больше или меньше, то номер является невалидным
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        Р•СЃР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ СЃРєРѕР±РєРё, Р·РЅР°Рє + РїРµСЂРµРґ 7, С†РёС„СЂ РІ РЅРѕРјРµСЂРµ РёР»Рё Р±РѕР»СЊС€Рµ РёР»Рё РјРµРЅСЊС€Рµ, С‚Рѕ РЅРѕРјРµСЂ СЏРІР»СЏРµС‚СЃСЏ РЅРµРІР°Р»РёРґРЅС‹Рј
         :return: bool
-        Возвращается или True или False
+        Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёР»Рё True РёР»Рё False
         """
         if re.match(r"(?:\+7|8)-\(\d{3}\)(-\d{3})(-\d{2}){2}", self._telephone) is not None:
             return True
@@ -101,10 +77,10 @@ class Validator:
 
     def check_weight(self) -> bool:
         """
-        Метод проверяет вес пользователя
-        Если вес является физически невозможным, то вес является невалидным
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ РІРµСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        Р•СЃР»Рё РІРµСЃ СЏРІР»СЏРµС‚СЃСЏ С„РёР·РёС‡РµСЃРєРё РЅРµРІРѕР·РјРѕР¶РЅС‹Рј, С‚Рѕ РІРµСЃ СЏРІР»СЏРµС‚СЃСЏ РЅРµРІР°Р»РёРґРЅС‹Рј
         :return: bool
-        Возвращается или True или False
+        Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёР»Рё True РёР»Рё False
         """
         if (re.match(r"^\d{2,3}$", str(self._weight)) is not None) and (int(float(self._weight) < 150)) and \
                 int((float(self._weight)) > 20):
@@ -113,10 +89,10 @@ class Validator:
 
     def check_snils(self) -> bool:
         """
-        Метод проверяет снилс пользователя
-        Если количество цифр в нем отлично от 11, то снилс невалидный
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ СЃРЅРёР»СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        Р•СЃР»Рё РєРѕР»РёС‡РµСЃС‚РІРѕ С†РёС„СЂ РІ РЅРµРј РѕС‚Р»РёС‡РЅРѕ РѕС‚ 11, С‚Рѕ СЃРЅРёР»СЃ РЅРµРІР°Р»РёРґРЅС‹Р№
         :return: bool
-        Возвращается или True или False
+        Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёР»Рё True РёР»Рё False
         """
         if re.match(r"^\d{11}$", self._snils) is not None:
             return True
@@ -124,10 +100,10 @@ class Validator:
 
     def check_passport_series(self) -> bool:
         """
-        Метод проверяет серию паспорта пользователя
-        Если количество цифр больше или меньше 4 и цифры не разбиты на пары, то серия невалидная
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ СЃРµСЂРёСЋ РїР°СЃРїРѕСЂС‚Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        Р•СЃР»Рё РєРѕР»РёС‡РµСЃС‚РІРѕ С†РёС„СЂ Р±РѕР»СЊС€Рµ РёР»Рё РјРµРЅСЊС€Рµ 4 Рё С†РёС„СЂС‹ РЅРµ СЂР°Р·Р±РёС‚С‹ РЅР° РїР°СЂС‹, С‚Рѕ СЃРµСЂРёСЏ РЅРµРІР°Р»РёРґРЅР°СЏ
         :return: bool
-        Возвращается или True или False
+        Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёР»Рё True РёР»Рё False
         """
         if re.match(r"^\d{2}\s\d{2}$", self._passport_series) is not None:
             return True
@@ -135,22 +111,22 @@ class Validator:
 
     def check_university(self) -> bool:
         """
-        Метод проверяет университет пользователя
-        Если университета не существует, то он не валидный
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ СѓРЅРёРІРµСЂСЃРёС‚РµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        Р•СЃР»Рё СѓРЅРёРІРµСЂСЃРёС‚РµС‚Р° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, С‚Рѕ РѕРЅ РЅРµ РІР°Р»РёРґРЅС‹Р№
         :return: bool
-        Возвращается или True или False
+        Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёР»Рё True РёР»Рё False
         """
-        if (re.match(r"^([А-яA-z]+\.?\s?-?)+$", self._university) is not None) and \
+        if (re.match(r"^([Рђ-СЏA-z]+\.?\s?-?)+$", self._university) is not None) and \
                 (self._university not in self._invalid_university):
             return True
         return False
 
     def check_work_experience(self) -> bool:
         """
-        Метод проверяет рабочий стаж пользователя
-        Если он состоит не из цифр, или превышает разумное значение, то он невалидный
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ СЂР°Р±РѕС‡РёР№ СЃС‚Р°Р¶ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        Р•СЃР»Рё РѕРЅ СЃРѕСЃС‚РѕРёС‚ РЅРµ РёР· С†РёС„СЂ, РёР»Рё РїСЂРµРІС‹С€Р°РµС‚ СЂР°Р·СѓРјРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ, С‚Рѕ РѕРЅ РЅРµРІР°Р»РёРґРЅС‹Р№
         :return: bool
-        Возвращается или True или False
+        Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёР»Рё True РёР»Рё False
         """
         if (re.match(r"^\d+$", str(self._work_experience)) is not None) and (
                 int(float(self._work_experience)) > 0) and (int(float(self._work_experience)) < 60):
@@ -159,45 +135,45 @@ class Validator:
 
     def check_political_views(self) -> bool:
         """
-        Метод проверяет полит. взгляды пользователя
-        Если они не соответствуют существующим полит. взглядам, то они невалидные
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ РїРѕР»РёС‚. РІР·РіР»СЏРґС‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        Р•СЃР»Рё РѕРЅРё РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‚ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРј РїРѕР»РёС‚. РІР·РіР»СЏРґР°Рј, С‚Рѕ РѕРЅРё РЅРµРІР°Р»РёРґРЅС‹Рµ
         :return: bool
-        Возвращается или True или False
+        Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёР»Рё True РёР»Рё False
         """
-        if (re.match(r"^(([А-яA-z])+\.?\s?-?)+$", self._political_views) is not None) and \
+        if (re.match(r"^(([Рђ-СЏA-z])+\.?\s?-?)+$", self._political_views) is not None) and \
                 (self._political_views in self._valid_political_views):
             return True
         return False
 
     def check_worldview(self) -> bool:
         """
-        Метод проверяет мировоззрение пользователя
-        Если оно не соответствует существующим мировоззрениям, то оно невалидное
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ РјРёСЂРѕРІРѕР·Р·СЂРµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        Р•СЃР»Рё РѕРЅРѕ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРј РјРёСЂРѕРІРѕР·Р·СЂРµРЅРёСЏРј, С‚Рѕ РѕРЅРѕ РЅРµРІР°Р»РёРґРЅРѕРµ
         :return: bool
-        Возвращается или True или False
+        Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёР»Рё True РёР»Рё False
         """
-        if (re.match(r"^([А-яA-z]+\.?\s?-?)+$", self._worldview) is not None) and \
+        if (re.match(r"^([Рђ-СЏA-z]+\.?\s?-?)+$", self._worldview) is not None) and \
                 (self._worldview in self._valid_worldview):
             return True
         return False
 
     def check_address(self) -> bool:
         """
-        Метод проверяет адрес пользователя
-        Если он не начинается с ул. или Аллея, то он невалидный
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ Р°РґСЂРµСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        Р•СЃР»Рё РѕРЅ РЅРµ РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ СѓР». РёР»Рё РђР»Р»РµСЏ, С‚Рѕ РѕРЅ РЅРµРІР°Р»РёРґРЅС‹Р№
         :return: bool
-        Возвращается или True или False
+        Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёР»Рё True РёР»Рё False
         """
-        if re.match(r"^[A-я.]+\s[\w .()-]+\d+$", self._address) is not None:
+        if re.match(r"^[A-СЏ.]+\s[\w .()-]+\d+$", self._address) is not None:
             return True
         return False
 
     def check_data(self) -> list:
         """
-        Метод проверяет все поля на корректность
-        Если в каком-либо поле найдена ошибка, то оно записывается в список
+        РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ РІСЃРµ РїРѕР»СЏ РЅР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ
+        Р•СЃР»Рё РІ РєР°РєРѕРј-Р»РёР±Рѕ РїРѕР»Рµ РЅР°Р№РґРµРЅР° РѕС€РёР±РєР°, С‚Рѕ РѕРЅРѕ Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ РІ СЃРїРёСЃРѕРє
         :return: list
-        Возвращает список с данными пользователя, у которого присутствует невалидная запись
+        Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє СЃ РґР°РЅРЅС‹РјРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, Сѓ РєРѕС‚РѕСЂРѕРіРѕ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ РЅРµРІР°Р»РёРґРЅР°СЏ Р·Р°РїРёСЃСЊ
         """
         invalid_values = []
         if not self.check_telephone():
@@ -221,7 +197,7 @@ class Validator:
         return invalid_values
 
 
-def file_validate(file_input: str, file_output: str, file_output_: str):
+def file_validate(file_input: str, file_output: str):
     data = File(file_input).data
     count_valid = 0
     count_invalid = 0
@@ -235,9 +211,8 @@ def file_validate(file_input: str, file_output: str, file_output_: str):
                             "worldview": 0,
                             "address": 0}
     list_result = []
-    list_fail_result = []
 
-    with tqdm(data, desc="Прогресс обработки записей") as progressbar:
+    with tqdm(data, desc="РџСЂРѕРіСЂРµСЃСЃ РѕР±СЂР°Р±РѕС‚РєРё Р·Р°РїРёСЃРµР№") as progressbar:
         for elem in data:
             check = Validator(elem).check_data()
             if len(check) == 0:
@@ -257,28 +232,10 @@ def file_validate(file_input: str, file_output: str, file_output_: str):
                 )
             else:
                 count_invalid += 1
-                list_fail_result.append(
-                    {
-                        "telephone": elem["telephone"],
-                        "weight": elem["weight"],
-                        "snils": elem["snils"],
-                        "passport_series": elem["passport_series"],
-                        "university": elem["university"],
-                        "work_experience": elem["work_experience"],
-                        "political_views": elem["political_views"],
-                        "worldview": elem["worldview"],
-                        "address": elem["address"]
-                    }
-                )
-                for item in check:
-                    dict_invalid_records[item] += 1
             progressbar.update(1)
 
     with open(file_output, 'w', encoding='utf-8') as output:
         json.dump(list_result, output, indent=4, ensure_ascii=False)
-
-    with open(file_output_, 'w', encoding='utf-8') as output_:
-        json.dump(list_fail_result, output_, indent=4, ensure_ascii=False)
 
     print(f"Count of valid records: {count_valid}")
     print(f"Count of invalid records: {count_invalid}")
