@@ -232,6 +232,8 @@ def file_validate(file_input: str, file_output: str):
                 )
             else:
                 count_invalid += 1
+                for item in check:
+                    dict_invalid_records[item] += 1
             progressbar.update(1)
 
     with open(file_output, 'w', encoding='utf-8') as output:
